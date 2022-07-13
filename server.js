@@ -75,7 +75,7 @@ app.get('/delete_by_range_id', (req, res) => {
         });
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log(app.listen().address())
     console.log(`Example app listening on port ${port}`)
 })
