@@ -48,20 +48,15 @@ app.post('/create_user', (req, res) => {
         });
 })
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
 
-    db.any('select * from users where email = $1 and password = $2', [req.body.email, req.body.password])
-        .then((data) => {
-            if (data.length !== 0) {
-                res.json({ "id": uuidv4(), "severity": "success", "email": req.body.email, "text": `Success  login ${req.body.email}` })
-            } else {
-                res.json({ "id": uuidv4(), "severity": "error", "email": req.body.email, "text": `Invalid email address or password` })
-            }
-        })
-        .catch(error => {
-            console.log(error)
-            res.json({ "id": uuidv4(), "severity": "error", "text": "Неизветстная ошибка" })
-        });
+    const row = await db.one('select * from users where email = $1 and password = $2', [req.body.email, req.body.password])
+
+    if (row.length !== 0) {
+        res.json({ "id": uuidv4(), "severity": "success", "email": req.body.email, "text": `Success  login ${req.body.email}` })
+    } else {
+        res.json({ "id": uuidv4(), "severity": "error", "email": req.body.email, "text": `Invalid email address or password` })
+    }
 })
 
 app.get('/delete_by_range_id', (req, res) => {
