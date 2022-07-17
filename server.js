@@ -60,7 +60,7 @@ app.post('/login', async (req, res) => {
 })
 
 app.get('/delete_by_range_id', (req, res) => {
-    db.any('DELETE FROM users WHERE id BETWEEN 26  AND 1000')
+    db.any('DELETE FROM users WHERE id BETWEEN 3  AND 1000')
         .then((data) => {
             console.log('Delete')
             res.send('Delete')
